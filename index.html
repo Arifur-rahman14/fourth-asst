@@ -36,7 +36,7 @@
 
         <div class="booking-content">
             <h1>Cruise Queen</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
         </div>
 
 
@@ -127,11 +127,9 @@
 
     <!-- Final Check Out Page Design  -->
 
-    <section id="second-block">
-        <div class="thank">
+    <section id="second-block">     
             <h1>You have successfully confirm your ticket.</h1>
-            <h2>Thank You!</h2>
-        </div>
+            <h2 class="thank">Thank You!</h2>
     </section>
     
     <!-- JavaScript Code's -->
@@ -183,7 +181,6 @@
             const economyAmount = subTotalAmountEconomy * 100;
             const subTotal = firstClassAmount + economyAmount;
             document.getElementById("subTotal").innerText = subTotal;
-            console.log("subTotal");
         }
 
         //Vat related JavaScript Code
@@ -192,7 +189,6 @@
             const vatNumber = parseFloat(vatAmount);
             const vat = vatNumber / 10;
             document.getElementById("vat").innerText = vat;
-            console.log(vat);
         }
 
         function allSeatCost() {
@@ -210,7 +206,7 @@
         //Final Destination Page
         document.getElementById("book-now").addEventListener("click", function () {
             document.getElementById("first-block").style.display = "none";
-            document.getElementById("second-section").style.display = block;
+            document.getElementById("second-block").style.display = "block";
         });
 
     </script>
