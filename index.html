@@ -5,16 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curise Booking</title>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
+
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
     <!--Header and Menu Section-->
+
     <header class="container">
         <nav>
             <ul>
@@ -27,6 +31,7 @@
     </header>
 
     <!--Booking Section-->
+    <section id="first-block">
     <main class="main-content container">
 
         <div class="booking-content">
@@ -39,7 +44,7 @@
             <h3>Book Ocean Time</h3>
             <div class="input-group">
                 <label for="">Flying From</label>
-                <input class="inp-style" type="text" name="" placeholder="Dhake, Bangladesh">
+                <input class="inp-style" type="text" name="" placeholder="Dhaka, Bangladesh">
             </div>
             <div class="input-group">
                 <label for="">Flying To</label>
@@ -55,32 +60,45 @@
                     <input class="inp-style" type="date" name="">
                 </div>
             </div>
+
+            <!-- First class seat booking input area start here  -->
+
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="counting-seat" class="inp-style inp-width" type="number" name="" value="0">
                 </div>
+
+                <!-- First Class Seat Button Area Start Here-->
                 <div class="plus-minus-btn">
-                    <p>+ -</p>
+                    <button id="first-class-booking">+</button>
+                    <button id="first-cls-minus">-</button>
                 </div>
             </div>
-            
+
+
+            <!-- Economy/Second Class Seat Booking Area Start Here  -->
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="economy-cls-booking" class="inp-style inp-width" type="number" name="" value="0">
                 </div>
+
+                <!-- Economy/Second Class Seat Button Area Start Here  -->
                 <div class="plus-minus-btn">
-                    <p> <span>+</span> <span>-</span> </p>
+                <button id="economy-cls-reserve">+</button>
+                <button id="second-cls-minus" class="btn">-</button>
                 </div>
             </div>
+
+
             <div class="calculations">
                 <div class="amount">
                     <div class="left">
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$000</p>
+                        <p>$<span id="subTotal">000</span></p>
                     </div>
                 </div>
 
@@ -89,7 +107,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$00</p>
+                        <p>$<span id="vat">00</span></p>
                     </div>
                 </div>
                 <hr>
@@ -98,15 +116,104 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$000</p>
+                        <p>$<span id="total">000</span></p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="book-now" class="btn-style">Book Now</button>
         </div>
     </main>
+    </section>
 
-    <!--Thank You-->
+    <!-- Final Check Out Page Design  -->
+
+    <section id="second-block">
+        <div class="thank">
+            <h1>You have successfully confirm your ticket.</h1>
+            <h2>Thank You!</h2>
+        </div>
+    </section>
+    
+    <!-- JavaScript Code's -->
+    <script>
+        // First Class Seat Reservation 
+        const addFirstClass = document.getElementById("first-class-booking")
+        addFirstClass.addEventListener("click", function () {
+            totalSeat("counting-seat", 1);
+            totalCostWithVat();
+        });
+
+        const minusFirstClass = document.getElementById("first-cls-minus")
+        minusFirstClass.addEventListener("click", function () {
+            totalSeat("counting-seat", -1);
+            totalCostWithVat();
+        });
+
+
+        // Second/Economy Class Seat Reservation 
+        const addSecondClass = document.getElementById("economy-cls-reserve")
+        addSecondClass.addEventListener("click", function () {
+            totalSeat("economy-cls-booking", 1);
+            totalCostWithVat();
+        });
+        const minusSecondClass = document.getElementById("second-cls-minus")
+        minusSecondClass.addEventListener("click", function () {
+            totalSeat("economy-cls-booking", -1);
+            totalCostWithVat();
+        });
+        
+        function totalSeat(id, n) {
+            const inputSeatArea = document.getElementById(id).value;
+            const seatCount = parseInt(inputSeatArea);
+            const newSeat = seatCount + n;
+            if (newSeat < 0) {
+                newSeat = 0;
+            }
+            document.getElementById(id).value = newSeat;
+        }
+
+        // Total Cost 
+        function subTotal() {
+            const subTotalCost = document.getElementById("counting-seat").value;
+            const subTotalAmount = parseInt(subTotalCost);
+            const firstClassAmount = subTotalAmount * 150;
+            const subTotalCostEconomy = document.getElementById("economy-cls-booking")
+                .value;
+            const subTotalAmountEconomy = parseInt(subTotalCostEconomy);
+            const economyAmount = subTotalAmountEconomy * 100;
+            const subTotal = firstClassAmount + economyAmount;
+            document.getElementById("subTotal").innerText = subTotal;
+            console.log("subTotal");
+        }
+
+        //Vat related JavaScript Code
+        function Vat() {
+            const vatAmount = document.getElementById("subTotal").innerText;
+            const vatNumber = parseFloat(vatAmount);
+            const vat = vatNumber / 10;
+            document.getElementById("vat").innerText = vat;
+            console.log(vat);
+        }
+
+        function allSeatCost() {
+            const subTotalAmount = document.getElementById("subTotal").innerText;
+            const subTotal = parseFloat(subTotalAmount);
+            const vatAmount = document.getElementById("vat").innerText;
+            const vat = parseFloat(vatAmount);
+            const allSeatCost = subTotal + vat;
+            document.getElementById("total").innerText = allSeatCost;
+        }
+        function totalCostWithVat() {
+            subTotal(); Vat(); allSeatCost();
+        }
+
+        //Final Destination Page
+        document.getElementById("book-now").addEventListener("click", function () {
+            document.getElementById("first-block").style.display = "none";
+            document.getElementById("second-section").style.display = block;
+        });
+
+    </script>
 </body>
 
 </html>
